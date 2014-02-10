@@ -1,0 +1,32 @@
+#!/usr/bin/python
+import re, sys, zlib, base64, getopt
+from os import path
+
+def pack(filepath):
+    with open(filepath, 'r') as fi:
+        r = base64.b64encode(zlib.compress(fi.read()))
+    with open(filepath, 'w') as fo:
+        fo.write('''#!/usr/bin/python
+exec(compile(__import__('zlib').decompress(__import__('base64').b64decode('%s')), '', 'exec'))''' % r)
+
+re_exec = re.compile('''exec\(compile\S*zlib\S*decompress\S*base64\S*b64decode\('(.*)'\)\), '', 'exec'\)\)''')
+def unpack(filepath):
+    with open(filepath, 'r') as fi:
+        for line in fi:
+            if line.startswith('exec'): r = re_exec.match(line).groups(1)[0]
+    with open(filepath, 'w') as fo:
+        fo.write(zlib.decompress(base64.b64decode(r)))
+
+def help():
+    print '%s v1.0 written by Shell.Xu' % path.basename(sys.argv[0])
+    print '%s [-u] target' % path.basename(sys.argv[0])
+
+if __name__ == '__main__':
+    optlist, argv = getopt.getopt(sys.argv[1:], 'u')
+    f = unpack if '-u' in dict(optlist) else pack
+    if argv:
+        for arg in argv: f(path.expanduser(arg))
+    else: help()
+
+
+
