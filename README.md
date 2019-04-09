@@ -17,7 +17,7 @@ Usage
 然后使用`_zshrc`文件即可
 
 
-###tmux
+### tmux
 
 将tmux配置文件放到用户主目录,记得修改tmux-powerline路径
 
@@ -40,7 +40,7 @@ Usage
         map! <Esc>OF <End>
     endif
 
-###tmux_powerline
+### tmux_powerline
 
      ./generate_rc.sh
      mv ~/.tmux-powerlinerc.default ~/.tmux-powerlinerc
