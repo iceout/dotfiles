@@ -12,6 +12,7 @@ Usage
     sudo apt-get install zsh
     chsh -s /bin/zsh
     sudo apt-get install git
+    curl -L git.io/antigen > antigen.zsh
 
 然后使用`_zshrc`文件即可
 
