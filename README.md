@@ -7,11 +7,14 @@ some personal config files.
 Usage
 -----
 
-###bookmark.sh
+### zsh
 
-Add the following line to ~/.bashrc:
+    sudo apt-get install zsh
+    chsh -s /bin/zsh
+    sudo apt-get install git
 
-    source PATH\_TO\_FILE/bookmarks.sh
+然后使用`_zshrc`文件即可
+
 
 ###tmux
 
