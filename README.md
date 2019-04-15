@@ -45,3 +45,8 @@ Usage
      ./generate_rc.sh
      mv ~/.tmux-powerlinerc.default ~/.tmux-powerlinerc
      #export TMUX_POWERLINE_SEG_WEATHER_LOCATION="2151330" #编辑.tmux-powerlinerc
+
+
+### flake8
+
+flake8的配置文件路径~/.config/flake8
