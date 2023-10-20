@@ -16,6 +16,8 @@ if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
 
+zstyle ':zim:git' aliases-prefix 'g'
+
 source ${ZIM_HOME}/init.zsh
 
 # 覆盖plugins/common-aliases/common-aliases.plugin.zsh

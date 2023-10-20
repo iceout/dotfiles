@@ -4,7 +4,6 @@ zmodule utility
 zmodule environment
 
 zmodule iceout/exa
-zstyle ':zim:git' aliases-prefix 'g'
 zmodule iceout/zimgit
 
 zmodule zsh-users/zsh-completions --fpath src
