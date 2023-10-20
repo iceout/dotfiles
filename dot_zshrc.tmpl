@@ -39,7 +39,9 @@ alias 'hist=fc -lt "%F %T" 1'
 source ~/.bash_profile
 
 # pyenv
+{{- if eq .chezmoi.hostname "ZhangXuanyideMacBook-Pro.local" }}
 export PYENV_ROOT="/Users/iceout/code/github/pyenv"
+{{- end }}
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
