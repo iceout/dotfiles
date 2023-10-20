@@ -1,0 +1,15 @@
+zmodule romkatv/powerlevel10k
+
+zmodule utility
+zmodule environment
+
+# zstyle ':zim:git' aliases-prefix 'g'
+zmodule git
+zmodule iceout/exa
+
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
+
+#  zmodule ohmyzsh/ohmyzsh --root plugins/git
