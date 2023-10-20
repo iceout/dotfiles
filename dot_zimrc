@@ -3,9 +3,9 @@ zmodule romkatv/powerlevel10k
 zmodule utility
 zmodule environment
 
-# zstyle ':zim:git' aliases-prefix 'g'
-zmodule git
 zmodule iceout/exa
+zstyle ':zim:git' aliases-prefix 'g'
+zmodule iceout/zimgit
 
 zmodule zsh-users/zsh-completions --fpath src
 zmodule completion
