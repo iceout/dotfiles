@@ -24,16 +24,9 @@ source ${ZIM_HOME}/init.zsh
 # [ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
 # zstyle ':completion:*:hosts' hosts $_ssh_config
 
-function tabname {
-  if [ -z $TMUX ] ; then
-    printf "\e]1;$@\a"
-  else
-   tmux rename-window "$@"
-  fi
-}
-
 # 使提示更清晰
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
+
 # history
 alias 'hist=fc -lt "%F %T"'
 
