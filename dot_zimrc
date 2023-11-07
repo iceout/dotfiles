@@ -11,6 +11,4 @@ zmodule completion
 zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
 
-#  zmodule ohmyzsh/ohmyzsh --root plugins/git
-
 zmodule romkatv/zsh-prompt-benchmark
