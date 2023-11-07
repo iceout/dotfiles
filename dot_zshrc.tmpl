@@ -34,7 +34,7 @@ alias 'hist=fc -lt "%F %T"'
 source ~/.bash_profile
 
 # pyenv
-{{- if eq .chezmoi.hostname "ZhangXuanyideMacBook-Pro" }}
+{{- if eq .chezmoi.hostname "zxy-MBP" }}
 export PYENV_ROOT="/Users/iceout/code/github/pyenv"
 {{- end }}
 {{- if eq .chezmoi.hostname "doubandev2" }}
@@ -52,7 +52,7 @@ eval "$(zoxide init zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-{{- if eq .chezmoi.hostname "ZhangXuanyideMacBook-Pro" }}
+{{- if eq .chezmoi.hostname "zxy-MBP" }}
 alias fly='env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890'
 {{- end }}
 
