@@ -59,6 +59,8 @@ export NVM_DIR="$HOME/.nvm"
 alias fly='env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890'
 {{- end }}
 
+export PATH="~/.local/bin:$PATH"
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
