@@ -61,10 +61,6 @@ eval "$(zoxide init zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-{{- if eq .chezmoi.hostname "Braavos" }}
-export PATH="/var/services/homes/iceout/.local/bin:$PATH"
-{{- end }}
-
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
