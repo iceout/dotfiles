@@ -33,6 +33,10 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 # history
 alias 'hist=fc -lt "%F %T"'
 
+{{- if eq .chezmoi.hostname "zxy-MBP" "Braavos" }}
+alias fly='env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890'
+{{- end }}
+
 # some export
 source ~/.bash_profile
 
@@ -56,10 +60,6 @@ eval "$(zoxide init zsh)"
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-{{- if eq .chezmoi.hostname "zxy-MBP" }}
-alias fly='env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890'
-{{- end }}
 
 {{- if eq .chezmoi.hostname "Braavos" }}
 export PATH="/var/services/homes/iceout/.local/bin:$PATH"
