@@ -58,8 +58,10 @@ eval "$(pyenv virtualenv-init -)"
 eval "$(zoxide init zsh)"
 
 # nvm
+{{- if ne .chezmoi.hostname "Braavos" }}
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+{{- end }}
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
