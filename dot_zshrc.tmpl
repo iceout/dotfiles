@@ -40,6 +40,8 @@ alias fly='env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:789
 # some export
 source ~/.bash_profile
 
+export PATH="$HOME/.local/bin:$PATH
+
 # pyenv
 {{- if eq .chezmoi.hostname "zxy-MBP" }}
 export PYENV_ROOT="/Users/iceout/code/github/pyenv"
