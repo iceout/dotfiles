@@ -48,3 +48,16 @@ Using binary
 ```
 wget https://github.com/eza-community/eza/releases/download/v0.15.3/eza_x86_64-unknown-linux-gnu.zip
 ```
+
+# chezmoi
+
+安装 chezmoi 并更新配置文件
+
+```
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply iceout
+```
+
+更新本地git仓库，并看看有什么更新
+```
+chezmoi git pull -- --autostash --rebase && chezmoi diff
+```
