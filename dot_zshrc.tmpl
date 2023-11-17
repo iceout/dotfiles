@@ -7,6 +7,11 @@ fi
 
 zstyle ':zim:zmodule' use 'degit'
 ZIM_HOME=~/.zim
+# 检查路径是否在 PATH 中
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    # 如果路径不在 PATH 中，则添加到 PATH
+    export PATH=$PATH:$HOME/.local/bin
+fi
 
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
@@ -40,7 +45,6 @@ alias fly='env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:789
 # some export
 source ~/.bash_profile
 
-export PATH="$HOME/.local/bin":$PATH
 
 # pyenv
 {{- if eq .chezmoi.hostname "zxy-MBP" }}
