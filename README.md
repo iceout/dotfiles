@@ -49,6 +49,17 @@ Using binary
 wget https://github.com/eza-community/eza/releases/download/v0.15.3/eza_x86_64-unknown-linux-gnu.zip
 ```
 
+## pyenv
+
+
+```
+# On Debian/Ubuntu
+sudo apt install curl git-core gcc make zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libssl-dev libffi-dev lzma liblzma-dev
+
+git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv
+```
+
 # chezmoi
 
 安装 chezmoi 并更新配置文件
