@@ -55,10 +55,12 @@ export PYENV_ROOT="$HOME/.pyenv"
 {{- end }}
 
 {{- if eq .chezmoi.hostname "zxy-MBP" "doubandev2" "growing-echo-3"}}
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
+if [[ -n $PYENV_ROOT ]]; then
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 {{- end }}
 
 # zoxide
