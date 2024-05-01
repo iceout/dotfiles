@@ -13,6 +13,10 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     export PATH=$PATH:$HOME/.local/bin
 fi
 
+{{- if eq .chezmoi.hostname "XuanyideMBP" }}
+export PATH=$PATH:$HOME/code/venv/bin
+{{- end }}
+
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
@@ -38,7 +42,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 # history
 alias 'hist=fc -lt "%F %T"'
 
-{{- if eq .chezmoi.hostname "zxy-MBP" "Braavos" }}
+{{- if eq .chezmoi.hostname "zxy-MBP" "Braavos" "XuanyideMBP" }}
 alias fly='env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890'
 {{- end }}
 
