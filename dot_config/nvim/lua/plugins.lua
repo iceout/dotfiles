@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    "tanvirtin/monokai.nvim",
+    -- "tanvirtin/monokai.nvim",
     "shaunsingh/solarized.nvim",
     {
         'smoka7/hop.nvim',
