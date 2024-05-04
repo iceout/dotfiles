@@ -1,1 +1,4 @@
 README.md
+{{- if ne .chezmoi.hostname "zxy-M1Pro"}}
+dot_config/nvim/
+{{- end }}
