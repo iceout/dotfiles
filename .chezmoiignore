@@ -1,4 +1,4 @@
 README.md
-{{- if ne .chezmoi.hostname "zxy-M1Pro" "doubandev2"}}
+{{ if and (ne .chezmoi.hostname "zxy-M1Pro") (ne .chezmoi.hostname "doubandev2") }}
 .config/nvim/
-{{- end }}
+{{ end }}
