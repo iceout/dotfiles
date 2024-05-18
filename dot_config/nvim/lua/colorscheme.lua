@@ -1,6 +1,0 @@
---vim.cmd([[
---    augroup TransparentColours
---    autocmd!
---    autocmd ColorScheme * highlight normal ctermbg=NONE guiBG=NONE
---    augroup end
---]])

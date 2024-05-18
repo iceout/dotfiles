@@ -1,5 +1,9 @@
 {
   "hop.nvim": { "branch": "v2", "commit": "059e88e9dcaad3280ea1fd5c757f6904f274aed5" },
   "lazy.nvim": { "branch": "main", "commit": "aba872ec78ffe7f7367764ab0fff6f0170421fde" },
+  "mason-lspconfig.nvim": { "branch": "main", "commit": "9ae570e206360e47d30b4c35a4550c165f4ea7b7" },
+  "mason.nvim": { "branch": "main", "commit": "49ff59aded1047a773670651cfa40e76e63c6377" },
+  "nvim-lspconfig": { "branch": "master", "commit": "a284b14b3a9c4851f900286cd7eb68e3a8f90b1c" },
+  "nvim-treesitter": { "branch": "master", "commit": "00a8cfd562dc805eb4d732fbca35e23640dbf7c8" },
   "solarized.nvim": { "branch": "main", "commit": "bb2b42a2ae2dcb078ff308992f013f5182a362ae" }
 }

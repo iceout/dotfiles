@@ -27,6 +27,12 @@ vim.opt.hlsearch = false -- do not highlight matches
 vim.opt.ignorecase = true -- ignore case in searches by default
 vim.opt.smartcase = true -- but make it case sensitive if an uppercase is entered
 
+--Folding
+vim.opt.foldcolumn = "2"
+vim.opt.foldlevel = 90
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
 -- vim.api.nvim_exec([[
 --   autocmd BufEnter * silent! lcd %:p:h
 -- ]], false)
