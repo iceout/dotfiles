@@ -30,8 +30,14 @@ vim.opt.smartcase = true -- but make it case sensitive if an uppercase is entere
 --Folding
 vim.opt.foldcolumn = "2"
 vim.opt.foldlevel = 90
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+--vim.opt.foldmethod = "expr"
+vim.api.nvim_exec([[
+  augroup filetype_folding
+    autocmd!
+    autocmd FileType * setlocal foldmethod=indent
+    autocmd FileType c,go,gotmpl,html,javascript,json,lua,markdown,python,sh,tsx,typescript,yaml setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
+  augroup END
+]], false)
 
 -- vim.api.nvim_exec([[
 --   autocmd BufEnter * silent! lcd %:p:h
