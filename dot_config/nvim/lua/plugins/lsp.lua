@@ -51,7 +51,7 @@ return {
 					"c",
 					"bash",
 					"go",
-					"gotml",
+					"gotmpl",
 					"html",
 					"javascript",
 					"json",
