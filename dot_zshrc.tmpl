@@ -58,21 +58,26 @@ export PYENV_ROOT="$HOME/.pyenv"
 {{- end }}
 
 {{- if eq .chezmoi.hostname "zxy-MBP" "doubandev2" "growing-echo-3" "zxy-M1Pro"}}
-if [[ -n $PYENV_ROOT && -d $PYENV_ROOT ]]; then
-    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv virtualenv-init -)"
-fi
+pyenv () {
+    if [[ ":$PATH:" != *":${PYENV_ROOT}/bin:"* ]]; then
+        export PATH="${PYENV_ROOT}/bin:$PATH"
+        unset -f pyenv
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+    fi
+    pyenv "$@"
+}
 {{- end }}
 
 # zoxide
 eval "$(zoxide init zsh)"
 
-# nvm
+# nvm很慢，考虑更换其他工具
 {{- if ne .chezmoi.hostname "Braavos" }}
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+if [[ -n "$HOME/.nvm" && -d "$HOME/.nvm" ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    zsh-defer source "$HOME/.nvm/nvm.sh"
+fi
 {{- end }}
 
 # fzf

@@ -3,6 +3,7 @@ zmodule romkatv/powerlevel10k
 zmodule utility
 zmodule environment
 
+zmodule romkatv/zsh-defer
 zmodule iceout/exa
 zmodule iceout/zimgit
 
@@ -10,5 +11,3 @@ zmodule zsh-users/zsh-completions --fpath src
 zmodule completion
 zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
-
-zmodule romkatv/zsh-prompt-benchmark
