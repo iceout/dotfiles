@@ -38,6 +38,7 @@ return {
 			})
 			lspconfig.lua_ls.setup({})
 			lspconfig.gopls.setup({})
+			lspconfig.bashls.setup({})
 		end,
 	},
 
