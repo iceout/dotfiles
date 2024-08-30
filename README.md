@@ -60,6 +60,12 @@ git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv
 ```
 
+## mise
+
+```
+curl https://mise.run | sh
+```
+
 # chezmoi
 
 安装 chezmoi 并更新配置文件

@@ -53,11 +53,11 @@ fi
 {{- if eq .chezmoi.hostname "zxy-MBP" }}
 export PYENV_ROOT="/Users/iceout/code/github/pyenv"
 {{- end }}
-{{- if eq .chezmoi.hostname "doubandev2" "growing-echo-3" "zxy-M1Pro"}}
+{{- if eq .chezmoi.hostname "growing-echo-3" "zxy-M1Pro"}}
 export PYENV_ROOT="$HOME/.pyenv"
 {{- end }}
 
-{{- if eq .chezmoi.hostname "zxy-MBP" "doubandev2" "growing-echo-3" "zxy-M1Pro"}}
+{{- if eq .chezmoi.hostname "zxy-MBP" "growing-echo-3" "zxy-M1Pro"}}
 # pyenv () {
 #     if [[ ":$PATH:" != *":${PYENV_ROOT}/bin:"* ]]; then
 #         export PATH="${PYENV_ROOT}/bin:$PATH"
@@ -82,6 +82,13 @@ eval "$(zoxide init zsh)"
 if [[ -n "$HOME/.nvm" && -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
     zsh-defer source "$HOME/.nvm/nvm.sh"
+fi
+{{- end }}
+
+# dev2 上使用mise
+{{- if eq .chezmoi.hostname "doubandev2" }}
+if [[ -n "$HOME/.local/bin/mise" ]]; then
+    eval "$(~/.local/bin/mise activate zsh)"
 fi
 {{- end }}
 
