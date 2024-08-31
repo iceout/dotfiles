@@ -126,8 +126,12 @@ return {
 		"robitx/gp.nvim",
 		config = function()
 			local config = {
-				openai_api_key = { "cat", "/home/zhangxuanyi/deepseek" },
-				openai_api_endpoint = "https://api.deepseek.com/chat/completions",
+				providers = {
+					openai = {
+						endpoint = "https://api.deepseek.com/chat/completions",
+						secret = { "cat", "/home/zhangxuanyi/deepseek" },
+					},
+				},
 				agents = {
 					{
 						name = "Deepseek-coder",
