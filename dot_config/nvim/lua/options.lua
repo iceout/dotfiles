@@ -41,6 +41,14 @@ vim.api.nvim_exec([[
 -- vim.api.nvim_exec([[
 --   autocmd BufEnter * silent! lcd %:p:h
 -- ]], false)
-vim.api.nvim_create_autocmd('BufEnter', {
-    command = "silent! lcd %:p:h",
+-- 自动设置目录为文件所在目录
+--vim.api.nvim_create_autocmd('BufEnter', {
+--    command = "silent! lcd %:p:h",
+--})
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+    callback = function()
+        require("lint").try_lint()
+    end,
 })
+

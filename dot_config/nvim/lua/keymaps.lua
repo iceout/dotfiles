@@ -1,12 +1,13 @@
 -- define common options
 local opts = {
     noremap = true, -- non-recursive
-    silent = true, -- do not show message
+    silent = true,  -- do not show message
 }
 
 -----------------
 -- Normal mode --
 -----------------
+vim.keymap.set("n", "<Leader>w", ":w<CR>", { noremap = true, silent = true })
 
 -- Hint: see `:h vim.map.set()`
 -- Better window navigation
