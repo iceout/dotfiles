@@ -1,7 +1,7 @@
 -- define common options
 local opts = {
-	noremap = true, -- non-recursive
-	silent = true, -- do not show message
+    noremap = true, -- non-recursive
+    silent = true, -- do not show message
 }
 
 -----------------
@@ -41,12 +41,12 @@ vim.keymap.set("v", ">", ">gv", opts)
 -- gp.nvim --
 -----------------
 local function keymapOptions(desc)
-	return {
-		noremap = true,
-		silent = true,
-		nowait = true,
-		desc = "GPT prompt " .. desc,
-	}
+    return {
+        noremap = true,
+        silent = true,
+        nowait = true,
+        desc = "GPT prompt " .. desc,
+    }
 end
 
 vim.keymap.set({ "n", "i" }, "<C-g>r", "<cmd>GpRewrite<cr>", keymapOptions("Inline Rewrite"))
