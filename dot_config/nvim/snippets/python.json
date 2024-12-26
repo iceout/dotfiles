@@ -1,0 +1,12 @@
+{
+    "read csv": {
+        "prefix": "rcsv",
+        "body": ["with open(${1:filepath}, mode='r', encoding='utf-8') as _rfile:", "\tcsvrd = csv.reader(_rfile)", "\tfor line in csvrd:", "\t\t${2:ToDo}"],
+        "description": "read csv file"
+    },
+    "write csv": {
+        "prefix": "wcsv",
+        "body": ["with open(${1:filepath}, mode='${2:w}', newline='', encoding='utf-8') as _wfile:", "\tcsvwt = csv.writer(_wfile, lineterminator='\\n')", "\t${3:ToDo}"],
+        "description": "write csv file"
+    }
+}
