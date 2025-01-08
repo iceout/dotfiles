@@ -11,6 +11,14 @@ vim.opt.softtabstop = 4  -- number of spacesin tab when editing
 vim.opt.shiftwidth = 4   -- insert 4 spaces on a tab
 vim.opt.expandtab = true -- tabs are spaces, mainly because of python
 
+vim.opt.list = true
+vim.opt.listchars = {
+    tab = '→ ',     -- 显示制表符为箭头
+    trail = '·',    -- 显示行尾空格
+    extends = '⟩',  -- 显示被折叠的文本
+    precedes = '⟨', -- 显示被折叠的文本
+}
+
 -- UI config
 vim.opt.number = true         -- show absolute number
 vim.opt.relativenumber = true -- add numbers to each line on the left side

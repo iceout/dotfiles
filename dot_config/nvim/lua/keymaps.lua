@@ -1,7 +1,7 @@
 -- define common options
 local opts = {
     noremap = true, -- non-recursive
-    silent = true,  -- do not show message
+    silent = true, -- do not show message
 }
 
 -----------------
@@ -26,6 +26,11 @@ vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 -- buffers
 vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+
+-- 映射格式化快捷键
+vim.keymap.set("n", "<leader>lf", function()
+  vim.lsp.buf.format()
+end, { desc = "Format current buffer" })
 
 -- Clear search with <esc>
 vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
