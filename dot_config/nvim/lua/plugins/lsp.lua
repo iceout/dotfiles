@@ -10,10 +10,10 @@ return {
         },
       },
       ensure_installed = {
-        "flake8",   -- Python linter
+        "flake8", -- Python linter
       },
       automatic_installation = true,
-     },
+    },
     config = function(_, opts)
       require("mason").setup(opts)
       local mr = require("mason-registry")
@@ -24,7 +24,6 @@ return {
         end
       end
     end,
-    },
   },
 
   {
