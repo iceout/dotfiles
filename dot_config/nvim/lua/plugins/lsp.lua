@@ -9,6 +9,21 @@ return {
           package_uninstalled = "✗",
         },
       },
+      ensure_installed = {
+        "flake8",   -- Python linter
+      },
+      automatic_installation = true,
+     },
+    config = function(_, opts)
+      require("mason").setup(opts)
+      local mr = require("mason-registry")
+      for _, tool in ipairs(opts.ensure_installed) do
+        local p = mr.get_package(tool)
+        if not p:is_installed() then
+          p:install()
+        end
+      end
+    end,
     },
   },
 
@@ -16,12 +31,12 @@ return {
     "williamboman/mason-lspconfig.nvim",
     opts = {
       ensure_installed = {
-        "pyright",
         "ruff",
         "lua_ls",
         "gopls",
         "bashls",
       },
+      automatic_installation = true,
     },
   },
 
@@ -29,17 +44,6 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
-      lspconfig.pyright.setup({
-        settings = {
-          -- Using Ruff's import organizer
-          disableOrganizeImports = true,
-          python = {
-            analysis = {
-              autoSearchPaths = true,
-            },
-          },
-        },
-      })
       lspconfig.ruff.setup {
         trace = 'messages',
         init_options = {
