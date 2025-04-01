@@ -88,7 +88,7 @@ fi
 {{- end }}
 
 # dev 上使用mise
-{{- if eq .hostname "Winterfell" }}
+{{- if eq .hostname "Winterfell" "Pentos-Int"}}
 if [[ -n "$HOME/.local/bin/mise" ]]; then
     eval "$(~/.local/bin/mise activate zsh)"
 fi
