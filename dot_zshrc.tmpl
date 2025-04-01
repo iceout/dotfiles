@@ -50,14 +50,11 @@ fi
 
 
 # pyenv
-{{- if eq .hostname "Pentos-Int" }}
-export PYENV_ROOT="/Users/iceout/code/github/pyenv"
-{{- end }}
-{{- if eq .hostname "growing-echo-3" "Pentos-M1"}}
+{{- if eq .hostname "growing-echo-3"}}
 export PYENV_ROOT="$HOME/.pyenv"
 {{- end }}
 
-{{- if eq .hostname "Pentos-Int" "growing-echo-3" "Pentos-M1"}}
+{{- if eq .hostname "growing-echo-3"}}
 # pyenv () {
 #     if [[ ":$PATH:" != *":${PYENV_ROOT}/bin:"* ]]; then
 #         export PATH="${PYENV_ROOT}/bin:$PATH"
@@ -90,7 +87,7 @@ fi
 {{- end }}
 
 # dev 上使用mise
-{{- if eq .hostname "Winterfell" "Pentos-Int"}}
+{{- if eq .hostname "Winterfell" "Pentos-Int" "Pentos-M1"}}
 if [[ -n "$HOME/.local/bin/mise" ]]; then
     eval "$(~/.local/bin/mise activate zsh)"
 fi
