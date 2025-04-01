@@ -78,10 +78,12 @@ eval "$(zoxide init zsh)"
 {{- if ne .hostname "Braavos" }}
   {{- if ne .hostname "Winterfell" }}
   {{- if ne .hostname "Pentos-Int" }}
+  {{- if ne .hostname "Pentos-M1" }}
 if [[ -n "$HOME/.nvm" && -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
     zsh-defer source "$HOME/.nvm/nvm.sh"
 fi
+  {{- end }}
   {{- end }}
   {{- end }}
 {{- end }}
