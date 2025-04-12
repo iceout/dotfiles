@@ -36,13 +36,6 @@ source ${ZIM_HOME}/init.zsh
 # [ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
 # zstyle ':completion:*:hosts' hosts $_ssh_config
 
-# history
-alias 'hist=fc -lt "%F %T"'
-
-{{- if eq .hostname "Pentos-Int" "Braavos" "Pentos-M1" }}
-alias fly='env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890'
-{{- end }}
-
 # some export
 if [[ -f ~/.bash_profile ]]; then
     source ~/.bash_profile
