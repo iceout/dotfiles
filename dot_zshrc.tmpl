@@ -75,6 +75,7 @@ eval "$(zoxide init zsh)"
   {{- if ne .hostname "Winterfell" }}
   {{- if ne .hostname "Pentos-Int" }}
   {{- if ne .hostname "Pentos-M1" }}
+  {{- if ne .hostname "genuine-slab-1" }}
 if [[ -n "$HOME/.nvm" && -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
     zsh-defer source "$HOME/.nvm/nvm.sh"
@@ -82,10 +83,11 @@ fi
   {{- end }}
   {{- end }}
   {{- end }}
+  {{- end }}
 {{- end }}
 
 # dev 上使用mise
-{{- if eq .hostname "Winterfell" "Pentos-Int" "Pentos-M1" "Braavos"}}
+{{- if eq .hostname "Winterfell" "Pentos-Int" "Pentos-M1" "Braavos" "genuine-slab-1"}}
 if [[ -n "$HOME/.local/bin/mise" ]]; then
     eval "$(~/.local/bin/mise activate zsh)"
 fi
