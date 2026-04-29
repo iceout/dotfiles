@@ -80,3 +80,51 @@ chezmoi git pull -- --autostash --rebase && chezmoi diff
 # 示例：只同步 .zshrc 和 .zimrc 这两个未加密文件
 chezmoi apply ~/.zshrc ~/.zimrc
 ```
+
+## 日常更新流程
+
+这个仓库是个人 dotfiles，默认直接提交并 push 到 `origin/master`，不需要 PR。
+
+先进入 chezmoi 的 source 目录，并同步远端：
+
+```
+chezmoi cd
+git pull --ff-only
+```
+
+编辑配置文件：
+
+```
+chezmoi edit ~/.zshrc
+```
+
+也可以直接编辑 source 文件，例如 `dot_zshrc.tmpl`。
+
+检查并应用到当前机器：
+
+```
+chezmoi diff ~/.zshrc
+chezmoi apply ~/.zshrc
+```
+
+确认无误后提交并推送：
+
+```
+git status
+git add dot_zshrc.tmpl
+git commit -m "Update zshrc"
+git push origin master
+```
+
+如果已经直接修改了真实文件，例如 `~/.zshrc`，用下面流程把改动导回 chezmoi source：
+
+```
+chezmoi diff ~/.zshrc
+chezmoi add ~/.zshrc
+chezmoi cd
+git diff
+git commit -am "Update zshrc"
+git push origin master
+```
+
+只有在改动会影响多台机器且需要 review 时，才考虑开 PR。
