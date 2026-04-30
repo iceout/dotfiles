@@ -10,7 +10,6 @@ return {
         },
       },
       ensure_installed = {
-        "flake8", -- Python linter
       },
       automatic_installation = true,
     },
@@ -42,39 +41,58 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
-      lspconfig.ruff.setup {
-        trace = 'messages',
+      -- 获取 Neovim LSP 客户端的默认功能列表
+      -- 如果你使用 nvim-cmp，可以替换为: require('cmp_nvim_lsp').default_capabilities()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+      -- ===================================================================
+      --   在这里配置你的语言服务器
+      --   使用 vim.lsp.config(server_name, options)
+      -- ===================================================================
+
+      -- Ruff (Python)
+      vim.lsp.config('ruff', {
+        capabilities = capabilities,
+        trace = "messages",
         init_options = {
           settings = {
-            logLevel = 'debug',
-          }
-        }
-      }
+            logLevel = "debug",
+            enable = false,
+          },
+        },
+      })
 
-      lspconfig.lua_ls.setup({
+      -- Lua
+      vim.lsp.config('lua_ls', {
+        capabilities = capabilities,
         settings = {
           Lua = {
             runtime = {
-              -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim).
               version = "LuaJIT",
             },
             diagnostics = {
-              -- Get the language server to recognize the `vim` global
               globals = { "vim" },
             },
             workspace = {
-              -- Make the server aware of Neovim runtime files.
               library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
             },
             telemetry = {
-              enable = false, -- Disable telemetry
+              enable = false,
             },
           },
         },
       })
-      lspconfig.gopls.setup({})
-      lspconfig.bashls.setup({})
+
+      -- Go
+      vim.lsp.config('gopls', {
+        capabilities = capabilities,
+      })
+
+      -- Bash
+      vim.lsp.config('bashls', {
+        capabilities = capabilities,
+      })
     end,
   },
 
@@ -103,13 +121,14 @@ return {
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
+        fold = { enable = true },
       })
     end,
   },
 
   {
     "folke/trouble.nvim",
-    tag = "v3.6.0",
+    tag = "v3.7.1",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = "Trouble",
     keys = {

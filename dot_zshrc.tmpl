@@ -13,10 +13,6 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     export PATH=$PATH:$HOME/.local/bin
 fi
 
-{{- if eq .hostname "Pentos-M1" }}
-export PATH=$PATH:$HOME/code/venv/bin
-{{- end }}
-
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
@@ -43,7 +39,6 @@ fi
 if [ -f ~/.config/shell/aliases ]; then
     source ~/.config/shell/aliases
 fi
-
 
 # zoxide
 eval "$(zoxide init zsh)"
