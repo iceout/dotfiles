@@ -90,5 +90,9 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan"
 # item2 intergration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+{{- if ne .hostname "genuine-slab-1" }}
+  {{- if ne .hostname "growing-echo-3" }}
 # direnv
 eval "$(direnv hook zsh)"
+  {{- end }}
+{{- end }}
