@@ -1,5 +1,5 @@
 README.md
-{{ if and (ne .hostname "Pentos-M1") (ne .hostname "Winterfell") }}
+{{ if and (ne .hostname "Pentos-M1") (ne .hostname "Winterfell") (ne .hostname "Volantis") }}
 {{ if and (ne .hostname "Pentos-Int") (ne .hostname "Braavos") }}
 .config/nvim/
 {{ end }}
