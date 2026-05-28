@@ -48,7 +48,7 @@ eval "$(zoxide init zsh)"
   {{- if ne .hostname "Pentos-Int" }}
   {{- if ne .hostname "Pentos-M1" }}
   {{- if ne .hostname "Castle-Black" }}
-  {{- if ne .hostname "growing-echo-3" }}
+  {{- if ne .hostname "Oldtown" }}
   {{- if ne .hostname "Volantis" }}
 # nvm很慢，考虑更换其他工具
 if [[ -n "$HOME/.nvm" && -d "$HOME/.nvm" ]]; then
@@ -64,7 +64,7 @@ fi
 {{- end }}
 
 # dev 上使用mise
-{{- if eq .hostname "Winterfell" "Pentos-Int" "Pentos-M1" "Braavos" "Castle-Black" "growing-echo-3" "Volantis"}}
+{{- if eq .hostname "Winterfell" "Pentos-Int" "Pentos-M1" "Braavos" "Castle-Black" "Oldtown" "Volantis"}}
 if [[ -x "$HOME/.local/bin/mise" ]]; then
     eval "$(~/.local/bin/mise activate zsh)"
 fi
@@ -93,7 +93,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 {{- if ne .hostname "Castle-Black" }}
-  {{- if ne .hostname "growing-echo-3" }}
+  {{- if ne .hostname "Oldtown" }}
 # direnv
 eval "$(direnv hook zsh)"
   {{- end }}
