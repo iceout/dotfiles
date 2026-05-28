@@ -1,0 +1,9 @@
+umask = 0o022
+encryption = "age"
+
+[age]
+identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/age.txt"
+recipientsFile = "{{ .chezmoi.sourceDir }}/age-recipients.txt"
+
+[data]
+hostname = {{ promptStringOnce . "hostname" "Logical hostname" | quote }}

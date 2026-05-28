@@ -1,0 +1,15 @@
+# Public age recipients for encrypted dotfiles.
+# One age1... recipient per machine. Public recipients are safe to commit.
+# Private identities stay on each machine at ~/.config/chezmoi/age.txt.
+
+# existing machine 1
+age1k9rsefkzydahmal624csuvfqenqzud504y9pktuqtgdfeuns9vhsen4wv8
+
+# existing machine 2
+age1yu9glrx3raxkact0656fqeunjng4gt37l5dwspj34ams72dera7sh4vvvd
+
+# existing machine 3
+age18szc2vq54pjlm7d5a0c7d034ld94n6n2wcjwey4qtn5mhme7wpwsjceqyg
+
+# Volantis
+age19mcznvs4szujhpxmq2sqdsl66q9urq89740260n8kg2tuz2mkffst7smrz

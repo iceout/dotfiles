@@ -67,15 +67,26 @@ uv --version
 python --version
 ```
 
-### 3. 设置 chezmoi 本机逻辑 hostname
+### 3. 设置 chezmoi 本机逻辑 hostname 和 age identity
 
-不要把真实系统 hostname 当作模板判断条件。先创建本机私有配置：
+不要把真实系统 hostname 当作模板判断条件。先创建本机私有配置；新机器也固定使用 `~/.config/chezmoi/age.txt` 保存本机 age 私钥：
 
 ```sh
 mkdir -p ~/.config/chezmoi
 chmod 700 ~/.config/chezmoi
+
+if [ ! -f ~/.config/chezmoi/age.txt ]; then
+  chezmoi age-keygen -o ~/.config/chezmoi/age.txt
+  chmod 600 ~/.config/chezmoi/age.txt
+fi
+
 cat > ~/.config/chezmoi/chezmoi.toml <<'TOML'
 umask = 0o022
+encryption = "age"
+
+[age]
+identity = "~/.config/chezmoi/age.txt"
+recipientsFile = "~/.local/share/chezmoi/age-recipients.txt"
 
 [data]
 hostname = "Volantis"
@@ -246,6 +257,13 @@ private_dot_config/shell/encrypted_aliases.age
 private_dot_config/shell_gpt/encrypted_dot_sgptrc.age
 ```
 
+约定：
+
+- 每台机器只有自己的私钥，固定放在 `~/.config/chezmoi/age.txt`，权限 `600`，不要提交到仓库。
+- 所有机器的 public recipient 放在仓库里的 `age-recipients.txt`，这个文件可以提交。
+- `~/.config/chezmoi/chezmoi.toml` 用 `recipientsFile = "~/.local/share/chezmoi/age-recipients.txt"`，避免每台机器手动维护 recipients 列表。
+- `umask = 0o022` 固定 chezmoi 目标权限，避免不同机器的 shell umask 导致 `664/775` 权限噪音。
+
 未配置 age identity 时，`chezmoi diff/apply/status` 可能报：
 
 ```text
@@ -258,7 +276,39 @@ encryption not configured
 chezmoi apply ~/.zshrc ~/.zimrc
 ```
 
-等 age identity 配好后，再处理加密文件和全量 apply。
+### 新机器加入 age recipients
+
+在新机器上生成本机 identity 并输出 public recipient：
+
+```sh
+chezmoi cd
+scripts/age-new-host.sh
+```
+
+把输出的 `age1...` 复制到一台已经能解密当前仓库的机器上，追加到 `age-recipients.txt`，然后在那台旧机器上重新加密所有 `.age` 文件：
+
+```sh
+chezmoi cd
+vim age-recipients.txt
+scripts/age-rekey.sh
+git diff --stat
+git status --short
+git add age-recipients.txt private_dot_config/shell/encrypted_aliases.age private_dot_config/shell_gpt/encrypted_dot_sgptrc.age
+git commit -m "Add <hostname> age recipient"
+git push origin master
+```
+
+回到新机器同步并验证：
+
+```sh
+chezmoi cd
+git pull --ff-only
+chezmoi decrypt ~/.local/share/chezmoi/private_dot_config/shell/encrypted_aliases.age >/dev/null
+chezmoi status
+chezmoi diff
+```
+
+如果验证通过，再处理加密文件和全量 apply。
 
 ## 日常更新流程
 

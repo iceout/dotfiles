@@ -4,3 +4,5 @@ README.md
 .config/nvim/
 {{ end }}
 {{ end }}
+age-recipients.txt
+scripts/
