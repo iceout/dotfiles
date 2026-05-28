@@ -13,6 +13,13 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     export PATH=$PATH:$HOME/.local/bin
 fi
 
+# dev tools managed by mise
+{{- if eq .hostname "Winterfell" "Pentos-Int" "Pentos-M1" "Braavos" "Castle-Black" "Oldtown" "Volantis"}}
+if [[ -x "$HOME/.local/bin/mise" ]]; then
+    eval "$(~/.local/bin/mise activate zsh)"
+fi
+{{- end }}
+
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
@@ -41,7 +48,9 @@ if [ -f ~/.config/shell/aliases ]; then
 fi
 
 # zoxide
-eval "$(zoxide init zsh)"
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
 
 {{- if ne .hostname "Braavos" }}
   {{- if ne .hostname "Winterfell" }}
@@ -63,15 +72,12 @@ fi
   {{- end }}
 {{- end }}
 
-# dev 上使用mise
-{{- if eq .hostname "Winterfell" "Pentos-Int" "Pentos-M1" "Braavos" "Castle-Black" "Oldtown" "Volantis"}}
-if [[ -x "$HOME/.local/bin/mise" ]]; then
-    eval "$(~/.local/bin/mise activate zsh)"
-fi
-{{- end }}
-
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [[ -t 0 && -t 1 ]] && command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --zsh)"
+elif [[ -t 0 && -t 1 && -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

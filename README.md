@@ -49,6 +49,7 @@ mise use -g chezmoi@latest
 mise use -g neovim@stable
 mise use -g uv@latest
 mise use -g python@latest
+mise use -g zoxide@latest fzf@latest eza@latest
 ```
 
 如果需要固定 Python 版本，例如 Python 3.14：
@@ -213,45 +214,28 @@ sudo apt install direnv
 
 也可以按机器习惯用其他方式安装。
 
-### fzf
+### fzf / zoxide / eza
 
-macOS 可用 Homebrew：
-
-```sh
-brew install fzf
-$(brew --prefix)/opt/fzf/install
-```
-
-通用 git 安装：
+优先用 mise 统一管理：
 
 ```sh
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+mise use -g zoxide@latest fzf@latest eza@latest
 ```
 
-### zoxide
+`~/.zshrc` 会在初始化 Zim 之前启用 mise，这样 `zmodule iceout/exa` 能看到 mise 提供的 `eza`。
 
-macOS 可用 Homebrew：
+迁移旧安装时，建议先安装 mise 版本并验证：
 
 ```sh
-brew install zoxide
+which zoxide fzf eza
+zoxide --version
+fzf --version
+eza --version
 ```
 
-通用安装脚本：
+确认都走 mise 管理路径后，再按需清理旧的手动安装，例如旧的 `~/.local/bin/zoxide`、`~/.local/bin/eza` 或 `~/.fzf`。不要在 mise 版本验证前先删除旧安装。
 
-```sh
-curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-```
-
-### eza
-
-macOS 可用 Homebrew：
-
-```sh
-brew install eza
-```
-
-Linux 也可以使用发行版包管理器或官方 release binary。
+说明：`eza-community/eza` 是 eza 的真正上游项目；`mise-plugins/mise-eza` 是 asdf/mise 插件适配层。日常安装直接使用 mise 的 `eza` 工具名即可。
 
 ## 加密文件（age）
 
