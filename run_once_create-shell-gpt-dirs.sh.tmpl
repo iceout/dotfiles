@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+mkdir -p "{{ .chezmoi.homeDir }}/.config/shell_gpt/functions"
+{{- if eq .chezmoi.os "darwin" }}
+mkdir -p "{{ .chezmoi.homeDir }}/Library/Caches/shell_gpt"
+{{- else }}
+mkdir -p "{{ .chezmoi.homeDir }}/.cache/shell_gpt"
+{{- end }}

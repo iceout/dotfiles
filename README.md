@@ -254,7 +254,7 @@ eza --version
 
 ```text
 private_dot_config/shell/encrypted_aliases.age
-private_dot_config/shell_gpt/encrypted_dot_sgptrc.age
+private_dot_config/shell_gpt/encrypted_dot_sgptrc.tmpl.age
 ```
 
 约定：
@@ -263,6 +263,7 @@ private_dot_config/shell_gpt/encrypted_dot_sgptrc.age
 - 所有机器的 public recipient 放在仓库里的 `age-recipients.txt`，这个文件可以提交。
 - `~/.config/chezmoi/chezmoi.toml` 用 `recipientsFile = "~/.local/share/chezmoi/age-recipients.txt"`，避免每台机器手动维护 recipients 列表。
 - `umask = 0o022` 固定 chezmoi 目标权限，避免不同机器的 shell umask 导致 `664/775` 权限噪音。
+- `.sgptrc` 使用加密模板，`CHAT_CACHE_PATH`、`CACHE_PATH`、`OPENAI_FUNCTIONS_PATH` 等本机路径由 chezmoi 按系统和 home 目录渲染，不要把 `/var/folders/...` 或 `/Users/<固定用户名>/...` 写死进密文。
 
 未配置 age identity 时，`chezmoi diff/apply/status` 可能报：
 
@@ -293,7 +294,7 @@ vim age-recipients.txt
 scripts/age-rekey.sh
 git diff --stat
 git status --short
-git add age-recipients.txt private_dot_config/shell/encrypted_aliases.age private_dot_config/shell_gpt/encrypted_dot_sgptrc.age
+git add age-recipients.txt private_dot_config/shell/encrypted_aliases.age private_dot_config/shell_gpt/encrypted_dot_sgptrc.tmpl.age
 git commit -m "Add <hostname> age recipient"
 git push origin master
 ```
@@ -306,6 +307,7 @@ git push origin master
 chezmoi cd
 git pull --ff-only
 chezmoi decrypt ~/.local/share/chezmoi/private_dot_config/shell/encrypted_aliases.age >/dev/null
+chezmoi cat ~/.config/shell_gpt/.sgptrc >/dev/null
 chezmoi status
 chezmoi diff
 ```
