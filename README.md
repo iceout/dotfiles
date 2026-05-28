@@ -89,6 +89,9 @@ chmod 600 ~/.config/chezmoi/chezmoi.toml
 - `Pentos-M1`
 - `Pentos-Int`
 - `Volantis`
+- `Castle-Black`
+
+这些名字是 chezmoi 的私有逻辑机器名，不需要等于真实系统 hostname。优先继续使用《冰与火之歌》/《权力的游戏》里的地点或组织名，避免把 VPS 厂商、地域或真实 hostname 固化进公开 dotfiles。
 
 `umask = 0o022` 用于避免当前 shell 的 umask（例如 `0002`）导致 chezmoi diff 出现大量 `664/775` 权限噪音。
 
