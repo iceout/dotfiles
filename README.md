@@ -298,6 +298,8 @@ git commit -m "Add <hostname> age recipient"
 git push origin master
 ```
 
+`scripts/age-rekey.sh` 会在替换密文前验证重新加密后的内容能解回原文，并且默认拒绝 0 字节明文，避免误把 secret 重新加密成空内容。如果某个加密文件确实应该为空，可以显式使用 `ALLOW_EMPTY_AGE_PLAINTEXT=1 scripts/age-rekey.sh`。
+
 回到新机器同步并验证：
 
 ```sh
