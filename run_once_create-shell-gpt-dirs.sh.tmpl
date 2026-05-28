@@ -7,7 +7,7 @@ set -eu
 {{- end }}
 mkdir -p "{{ $shellGptConfigDir }}/functions"
 {{- if eq .chezmoi.os "darwin" }}
-mkdir -p "{{ .chezmoi.homeDir }}/Library/Caches/shell_gpt"
+mkdir -p "{{ env "TMPDIR" | trimSuffix "/" }}"
 {{- else }}
 mkdir -p "{{ .chezmoi.homeDir }}/.cache/shell_gpt"
 {{- end }}

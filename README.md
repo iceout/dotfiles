@@ -263,7 +263,7 @@ private_dot_config/shell_gpt/encrypted_dot_sgptrc.tmpl.age
 - 所有机器的 public recipient 放在仓库里的 `age-recipients.txt`，这个文件可以提交。
 - `~/.config/chezmoi/chezmoi.toml` 用 `recipientsFile = "~/.local/share/chezmoi/age-recipients.txt"`，避免每台机器手动维护 recipients 列表。
 - `umask = 0o022` 固定 chezmoi 目标权限，避免不同机器的 shell umask 导致 `664/775` 权限噪音。
-- `.sgptrc` 使用加密模板，`CHAT_CACHE_PATH`、`CACHE_PATH`、`ROLE_STORAGE_PATH`、`OPENAI_FUNCTIONS_PATH` 等本机路径由 chezmoi 按系统、home 目录和逻辑 hostname 渲染，不要把 `/var/folders/...` 或错误用户的 `/Users/<name>/...` 写死进密文。
+- `.sgptrc` 使用加密模板，`CHAT_CACHE_PATH`、`CACHE_PATH`、`ROLE_STORAGE_PATH`、`OPENAI_FUNCTIONS_PATH` 等本机路径由 chezmoi 按系统、home 目录和逻辑 hostname 渲染；macOS 的 cache 路径来自 `TMPDIR`，不要把 `/var/folders/...` 的随机片段或错误用户的 `/Users/<name>/...` 写死进密文。
 
 未配置 age identity 时，`chezmoi diff/apply/status` 可能报：
 
