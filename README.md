@@ -249,6 +249,18 @@ eza --version
 
 说明：`eza-community/eza` 是 eza 的真正上游项目；`mise-plugins/mise-eza` 是 asdf/mise 插件适配层。日常安装直接使用 mise 的 `eza` 工具名即可。
 
+### iTerm2 shell integration
+
+iTerm2 shell integration 是 macOS/iTerm2 的可选功能，不是新机器必装项。
+
+`~/.zshrc` 只会在以下条件同时满足时加载：
+
+- 当前系统是 macOS。
+- 当前终端是 iTerm2（`TERM_PROGRAM=iTerm.app`）。
+- `~/.iterm2_shell_integration.zsh` 文件存在且可读。
+
+需要这个功能的机器可以在 iTerm2 里通过菜单安装 shell integration；不需要或未安装时，chezmoi 生成的 zsh 配置不会报错，也不会在其他终端里加载它。
+
 ## 加密文件（age）
 
 仓库中有加密文件，例如：
