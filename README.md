@@ -22,16 +22,18 @@ Linux/macOS 通用安装方式：
 curl https://mise.run | sh
 ```
 
-把 mise 加入 shell。zsh 用户通常加入 `~/.zshrc`：
+安装脚本会把 `mise` 放到 `~/.local/bin/mise`。先不要手动修改 `~/.zshrc`；这个文件后续由 chezmoi 管理，仓库里的 `dot_zshrc.tmpl` 已经会在 zsh 启动时启用 mise。
+
+为了当前 shell 能继续安装 chezmoi 等工具，临时启用一次：
 
 ```sh
 eval "$(~/.local/bin/mise activate zsh)"
 ```
 
-当前 shell 立即生效：
+如果当前 shell 不是 zsh，或者不想改当前环境，也可以直接用完整路径：
 
 ```sh
-eval "$(~/.local/bin/mise activate zsh)"
+~/.local/bin/mise --version
 ```
 
 验证：
@@ -42,7 +44,7 @@ mise --version
 
 ### 2. 用 mise 安装基础工具
 
-推荐先用 mise 管理 chezmoi 和常用开发工具：
+推荐先用 mise 管理 chezmoi 和常用开发工具。如果 `mise` 还不在 `PATH`，把下面命令里的 `mise` 换成 `~/.local/bin/mise`：
 
 ```sh
 mise use -g chezmoi@latest
