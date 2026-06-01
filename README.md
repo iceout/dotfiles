@@ -67,9 +67,9 @@ uv --version
 python --version
 ```
 
-### 3. 设置 chezmoi 本机逻辑 hostname 和 age identity
+### 3. 生成本机 age identity
 
-不要把真实系统 hostname 当作模板判断条件。先创建本机私有配置；新机器也固定使用 `~/.config/chezmoi/age.txt` 保存本机 age 私钥：
+每台机器使用自己的 age identity，固定放在 `~/.config/chezmoi/age.txt`。不要提交这个私钥：
 
 ```sh
 mkdir -p ~/.config/chezmoi
@@ -79,22 +79,23 @@ if [ ! -f ~/.config/chezmoi/age.txt ]; then
   chezmoi age-keygen -o ~/.config/chezmoi/age.txt
   chmod 600 ~/.config/chezmoi/age.txt
 fi
-
-cat > ~/.config/chezmoi/chezmoi.toml <<'TOML'
-umask = 0o022
-encryption = "age"
-
-[age]
-identity = "~/.config/chezmoi/age.txt"
-recipientsFile = "~/.local/share/chezmoi/age-recipients.txt"
-
-[data]
-hostname = "Volantis"
-TOML
-chmod 600 ~/.config/chezmoi/chezmoi.toml
 ```
 
-把 `Volantis` 换成这台机器的逻辑名。已有命名风格包括：
+### 4. 初始化 dotfiles 并设置逻辑 hostname
+
+只拉取 source，不立即 apply：
+
+```sh
+chezmoi init iceout
+```
+
+初始化时，chezmoi 会 clone `iceout/dotfiles` 到 `~/.local/share/chezmoi`。因为仓库里有 `.chezmoi.toml.tmpl`，它还会生成本机私有配置 `~/.config/chezmoi/chezmoi.toml`，并提示：
+
+```text
+Logical hostname:
+```
+
+这里输入这台机器的逻辑名，例如 `Volantis`。这个值会成为模板里的 `.hostname`，用于区分机器配置；它不需要等于真实系统 hostname，也不要包含 VPS 厂商、地域或真实主机名。已有命名风格包括：
 
 - `Winterfell`
 - `Braavos`
@@ -104,17 +105,9 @@ chmod 600 ~/.config/chezmoi/chezmoi.toml
 - `Oldtown`
 - `Castle-Black`
 
-这些名字是 chezmoi 的私有逻辑机器名，不需要等于真实系统 hostname。优先继续使用《冰与火之歌》/《权力的游戏》里的地点或组织名，避免把 VPS 厂商、地域或真实 hostname 固化进公开 dotfiles。
+优先继续使用《冰与火之歌》/《权力的游戏》里的地点或组织名。`Braavos` 这类机器名还可能影响本机 chezmoi 配置，例如群晖上会把 `scriptTempDir` 设为 `/var/tmp`，避开 `noexec` 的 `/tmp`。
 
-`umask = 0o022` 用于避免当前 shell 的 umask（例如 `0002`）导致 chezmoi diff 出现大量 `664/775` 权限噪音。
-
-### 4. 初始化 dotfiles
-
-只拉取 source，不立即 apply：
-
-```sh
-chezmoi init iceout
-```
+`.chezmoi.toml.tmpl` 中的 `umask = 0o022` 用于避免当前 shell 的 umask（例如 `0002`）导致 chezmoi diff 出现大量 `664/775` 权限噪音。
 
 检查 source：
 
