@@ -95,12 +95,11 @@ bindkey "^[[B" down-line-or-beginning-search
 # 使提示更清晰
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan"
 
-{{- if eq .chezmoi.os "darwin" }}
-# iTerm2 shell integration is optional and only useful inside iTerm2.
-if [[ "${TERM_PROGRAM:-}" == "iTerm.app" && -r "${HOME}/.iterm2_shell_integration.zsh" ]]; then
+# iTerm2 shell integration is optional. It is useful for local or remote
+# interactive shells attached to iTerm2, and stays silent elsewhere.
+if [[ -o interactive && "${TERM_PROGRAM:-}" == "iTerm.app" && -r "${HOME}/.iterm2_shell_integration.zsh" ]]; then
     source "${HOME}/.iterm2_shell_integration.zsh"
 fi
-{{- end }}
 
 {{- if ne .hostname "Castle-Black" }}
   {{- if ne .hostname "Oldtown" }}

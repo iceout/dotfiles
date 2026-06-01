@@ -251,15 +251,15 @@ eza --version
 
 ### iTerm2 shell integration
 
-iTerm2 shell integration 是 macOS/iTerm2 的可选功能，不是新机器必装项。
+iTerm2 shell integration 是 iTerm2 的可选功能，不是新机器必装项。它既可以用于本机 macOS shell，也可以用于通过 iTerm2 SSH 进入的远程 Linux/VPS shell；前提是目标机器上安装了 `~/.iterm2_shell_integration.zsh`。
 
 `~/.zshrc` 只会在以下条件同时满足时加载：
 
-- 当前系统是 macOS。
+- 当前 shell 是交互式 shell。
 - 当前终端是 iTerm2（`TERM_PROGRAM=iTerm.app`）。
 - `~/.iterm2_shell_integration.zsh` 文件存在且可读。
 
-需要这个功能的机器可以在 iTerm2 里通过菜单安装 shell integration；不需要或未安装时，chezmoi 生成的 zsh 配置不会报错，也不会在其他终端里加载它。
+需要这个功能的机器可以在 iTerm2 里通过菜单安装 shell integration；远程服务器也可以按 iTerm2 文档安装对应脚本。不需要或未安装时，chezmoi 生成的 zsh 配置不会报错；用其他终端 App 连接同一台机器时也不会加载它。
 
 ## 加密文件（age）
 
