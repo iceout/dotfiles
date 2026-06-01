@@ -1,6 +1,8 @@
 umask = 0o022
 encryption = "age"
+{{ if eq .hostname "Braavos" -}}
 scriptTempDir = "/var/tmp"
+{{ end -}}
 
 [age]
 identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/age.txt"
