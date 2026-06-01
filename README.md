@@ -30,16 +30,14 @@ curl https://mise.run | sh
 eval "$(~/.local/bin/mise activate zsh)"
 ```
 
-如果当前 shell 不是 zsh，或者不想改当前环境，也可以直接用完整路径：
-
-```sh
-~/.local/bin/mise --version
-```
+如果当前 shell 不是 zsh，或者不想改当前环境，也可以直接用完整路径调用 `mise`。
 
 验证：
 
 ```sh
 mise --version
+# 如果 mise 还不在 PATH：
+~/.local/bin/mise --version
 ```
 
 ### 2. 用 mise 安装基础工具
@@ -51,13 +49,13 @@ mise use -g chezmoi@latest
 mise use -g neovim@stable
 mise use -g uv@latest
 mise use -g python@latest
-mise use -g zoxide@latest fzf@latest eza@latest
+mise use -g direnv@latest zoxide@latest fzf@latest eza@latest
 ```
 
-如果需要固定 Python 版本，例如 Python 3.14：
+如果需要固定 Python 主版本，例如 Python 3.14：
 
 ```sh
-mise use -g python@3.14.5
+mise use -g python@3.14
 ```
 
 验证：
@@ -91,6 +89,12 @@ fi
 chezmoi init iceout
 ```
 
+如果这台机器已经配置了 dotfiles 专用 SSH deploy key 和 `github.com-dotfiles` Host alias，也可以直接使用 SSH 初始化：
+
+```sh
+chezmoi init git@github.com-dotfiles:iceout/dotfiles.git
+```
+
 初始化时，chezmoi 会 clone `iceout/dotfiles` 到 `~/.local/share/chezmoi`。因为仓库里有 `.chezmoi.toml.tmpl`，它还会生成本机私有配置 `~/.config/chezmoi/chezmoi.toml`，并提示：
 
 ```text
@@ -115,7 +119,7 @@ Logical hostname:
 
 ```sh
 chezmoi source-path
-chezmoi cd
+cd "$(chezmoi source-path)"
 git status
 ```
 
@@ -150,7 +154,7 @@ mise use -g chezmoi@latest
 常用命令：
 
 ```sh
-chezmoi cd                       # 进入 source 目录
+chezmoi cd                       # 在 source 目录打开一个 shell
 chezmoi diff                     # 查看所有差异
 chezmoi diff ~/.zshrc            # 只看一个文件
 chezmoi apply ~/.zshrc           # 只应用一个文件
@@ -162,7 +166,7 @@ chezmoi edit ~/.zshrc            # 编辑 source 中对应文件
 同步远端但不 apply：
 
 ```sh
-chezmoi cd
+cd "$(chezmoi source-path)"
 git pull --ff-only
 chezmoi diff --keep-going
 ```
@@ -187,13 +191,15 @@ private_dot_config/nvim/
 ~/.config/nvim/
 ```
 
+部分轻量机器会通过 `.chezmoiignore` 跳过 nvim 配置；当前管理 nvim 的逻辑 hostname 包括 `Pentos-M1`、`Pentos-Int`、`Winterfell`、`Volantis` 和 `Braavos`。
+
 ### uv 和 Python
 
 优先用 mise：
 
 ```sh
 mise use -g uv@latest
-mise use -g python@3.14.5
+mise use -g python@3.14
 ```
 
 验证：
@@ -206,19 +212,19 @@ python3 --version
 
 ### direnv
 
-`~/.zshrc` 会启用 direnv：
+`~/.zshrc` 会在 `direnv` 存在时启用它；如果没有安装，zsh 启动时会跳过，不会报错。
+
+优先用 mise 安装：
 
 ```sh
-eval "$(direnv hook zsh)"
+mise use -g direnv@latest
 ```
 
-如果系统没有 direnv，需要先安装。Debian/Ubuntu 可用：
+也可以按机器习惯使用系统包管理器安装，例如 Debian/Ubuntu：
 
 ```sh
 sudo apt install direnv
 ```
-
-也可以按机器习惯用其他方式安装。
 
 ### fzf / zoxide / eza
 
@@ -266,7 +272,7 @@ private_dot_config/shell_gpt/encrypted_dot_sgptrc.tmpl.age
 encryption not configured
 ```
 
-这种情况下可以先只 apply 未加密文件：
+如果已经生成 identity，但它的 public recipient 还没有加入 `age-recipients.txt` 并 rekey，加密文件仍会解密失败。这两种情况下都可以先只 apply 未加密文件：
 
 ```sh
 chezmoi apply ~/.zshrc ~/.zimrc
@@ -277,21 +283,21 @@ chezmoi apply ~/.zshrc ~/.zimrc
 在新机器上生成本机 identity 并输出 public recipient：
 
 ```sh
-chezmoi cd
+cd "$(chezmoi source-path)"
 scripts/age-new-host.sh
 ```
 
 把输出的 `age1...` 复制到一台已经能解密当前仓库的机器上，追加到 `age-recipients.txt`，然后在那台旧机器上重新加密所有 `.age` 文件：
 
 ```sh
-chezmoi cd
+cd "$(chezmoi source-path)"
 vim age-recipients.txt
 scripts/age-rekey.sh
 git diff --stat
 git status --short
 git add age-recipients.txt private_dot_config/shell/encrypted_aliases.age private_dot_config/shell_gpt/encrypted_dot_sgptrc.tmpl.age
 git commit -m "Add <hostname> age recipient"
-git push origin master
+git push
 ```
 
 `scripts/age-rekey.sh` 会在替换密文前验证重新加密后的内容能解回原文，并且默认拒绝 0 字节明文，避免误把 secret 重新加密成空内容。如果某个加密文件确实应该为空，可以显式使用 `ALLOW_EMPTY_AGE_PLAINTEXT=1 scripts/age-rekey.sh`。
@@ -299,7 +305,7 @@ git push origin master
 回到新机器同步并验证：
 
 ```sh
-chezmoi cd
+cd "$(chezmoi source-path)"
 git pull --ff-only
 chezmoi decrypt ~/.local/share/chezmoi/private_dot_config/shell/encrypted_aliases.age >/dev/null
 chezmoi cat ~/.config/shell_gpt/.sgptrc >/dev/null
@@ -311,12 +317,12 @@ chezmoi diff
 
 ## 日常更新流程
 
-这个仓库是个人 dotfiles，默认直接提交并 push 到 `origin/master`，不需要 PR。
+这个仓库是个人 dotfiles，默认直接提交并 push 到当前分支的默认 remote，不需要 PR。
 
 进入 source 并同步远端：
 
 ```sh
-chezmoi cd
+cd "$(chezmoi source-path)"
 git pull --ff-only
 ```
 
@@ -346,7 +352,7 @@ chezmoi apply ~/.zshrc
 git status
 git add <changed-files>
 git commit -m "Update dotfiles"
-git push origin master
+git push
 ```
 
 如果已经直接修改了真实文件，例如 `~/.zshrc`，用下面流程把改动导回 chezmoi source：
@@ -354,10 +360,10 @@ git push origin master
 ```sh
 chezmoi diff ~/.zshrc
 chezmoi add ~/.zshrc
-chezmoi cd
+cd "$(chezmoi source-path)"
 git diff
 git commit -am "Update zshrc"
-git push origin master
+git push
 ```
 
 只有在改动会影响多台机器且需要 review 时，才考虑开 PR。

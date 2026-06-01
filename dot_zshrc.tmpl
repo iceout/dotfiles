@@ -101,6 +101,8 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 {{- if ne .hostname "Castle-Black" }}
   {{- if ne .hostname "Oldtown" }}
 # direnv
-eval "$(direnv hook zsh)"
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
   {{- end }}
 {{- end }}
