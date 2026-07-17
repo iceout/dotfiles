@@ -66,3 +66,22 @@ vim.keymap.set("v", "<C-g>i", ":<C-u>'<,'>GpImplement<cr>", keymapOptions("Imple
 -----------------
 -- end of gp.nvim --
 -----------------
+
+if vim.g.neovide then
+  local function paste()
+    vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
+  end
+
+  vim.keymap.set(
+    { "n", "i", "v", "c", "t" },
+    "<D-v>",
+    paste,
+    { silent = true, desc = "Paste" }
+  )
+  if vim.g.neovide then
+  vim.keymap.set("v", "<D-c>", '"+y', {
+    silent = true,
+    desc = "Copy",
+  })
+  end
+end
