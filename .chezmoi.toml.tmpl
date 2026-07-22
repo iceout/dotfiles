@@ -1,6 +1,7 @@
+{{- $hostname := promptStringOnce . "hostname" "Logical hostname" -}}
 umask = 0o022
 encryption = "age"
-{{ if eq .hostname "Braavos" -}}
+{{ if eq $hostname "Braavos" -}}
 scriptTempDir = "/var/tmp"
 {{ end -}}
 
@@ -9,4 +10,4 @@ identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/age.txt"
 recipientsFile = "{{ .chezmoi.sourceDir }}/age-recipients.txt"
 
 [data]
-hostname = {{ promptStringOnce . "hostname" "Logical hostname" | quote }}
+hostname = {{ $hostname | quote }}
