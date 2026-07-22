@@ -4,6 +4,12 @@ set -euo pipefail
 chezmoi_bin="${CHEZMOI_BIN:-chezmoi}"
 repo_root="$(git rev-parse --show-toplevel 2>/dev/null || "$chezmoi_bin" source-path)"
 cd "$repo_root"
+recipients_file="$repo_root/age-recipients.txt"
+
+if [[ ! -r "$recipients_file" ]]; then
+  echo "Age recipients file is not readable: $recipients_file" >&2
+  exit 1
+fi
 
 tmpdir="$(mktemp -d)"
 cleanup() {
@@ -32,7 +38,7 @@ If this file is intentionally empty, rerun with ALLOW_EMPTY_AGE_PLAINTEXT=1.
 EOF
     exit 1
   fi
-  "$chezmoi_bin" encrypt "$plain" > "$encrypted"
+  "$chezmoi_bin" --age-recipient-file "$recipients_file" encrypt "$plain" > "$encrypted"
   "$chezmoi_bin" decrypt "$encrypted" > "$verified"
   if ! cmp -s "$plain" "$verified"; then
     echo "Refusing to replace $rel because encrypted verification failed" >&2
