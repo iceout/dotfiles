@@ -1,0 +1,7 @@
+onboarding = false
+
+[keys]
+# Press Ctrl+B, then the workspace shortcut.
+previous_workspace = "prefix+up"
+next_workspace = "prefix+down"
+switch_workspace = "prefix+shift+1..9"
