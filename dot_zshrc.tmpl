@@ -91,6 +91,9 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
+# Support arrow keys in application cursor mode as well.
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
 
 # 使提示更清晰
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan"
